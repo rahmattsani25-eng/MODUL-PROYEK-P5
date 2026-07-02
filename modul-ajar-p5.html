@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modul Ajar Kokurikuler - P5</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            background: #f0f4f8;
+            color: #1e293b;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .app {
+            max-width: 1440px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            align-items: start;
+        }
+        @media (max-width: 1100px) {
+            .app {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            padding: 28px 30px;
+            border: 1px solid #e9edf2;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 22px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid #eef2f7;
+        }
+        .card-header h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #0b3b5c;
+        }
+        .card-header .badge {
+            background: #dbeafe;
+            color: #1d4ed8;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 2px 12px;
+            border-radius: 30px;
+            margin-left: auto;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+            color: #334155;
+        }
+        .form-group .hint {
+            font-weight: 400;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-left: 6px;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid #d1d9e6;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            background: #fafcff;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2d7fc1;
+            box-shadow: 0 0 0 3px rgba(45, 127, 193, 0.15);
+        }
+        .form-group textarea {
+            min-height: 68px;
+            resize: vertical;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        .check-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 20px;
+            background: #f8fafc;
+            padding: 14px 18px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+        .check-grid label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            font-size: 0.88rem;
+            cursor: pointer;
+        }
+        .check-grid input[type="checkbox"] {
+            width: 17px;
+            height: 17px;
+            accent-color: #1d4ed8;
+            cursor: pointer;
+        }
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid #e9edf2;
+        }
+        .btn {
+            padding: 11px 28px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #eef2f7;
+            color: #1e293b;
+        }
+        .btn-primary {
+            background: #0b3b5c;
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: #0a2f4a;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(11, 59, 92, 0.25);
+        }
+        .btn-success {
+            background: #0f7b3a;
+            color: #fff;
+        }
+        .btn-success:hover {
+            background: #0d662f;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(15, 123, 58, 0.25);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #cbd5e1;
+        }
+        .btn-outline:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+        }
+
+        .preview-wrap {
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e9edf2;
+            overflow: hidden;
+            position: sticky;
+            top: 20px;
+        }
+        .preview-header {
+            background: #0b3b5c;
+            color: #fff;
+            padding: 18px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .preview-header h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .preview-header .preview-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .preview-header .preview-actions .btn {
+            padding: 6px 18px;
+            font-size: 0.8rem;
+            border-radius: 30px;
+        }
+        .preview-body {
+            padding: 28px 30px;
+            max-height: 780px;
+            overflow-y: auto;
+            background: #fcfdff;
+        }
+        .preview-body::-webkit-scrollbar {
+            width: 6px;
+        }
+        .preview-body::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .preview-body::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        .preview-body .module-title {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #0b3b5c;
+            margin-bottom: 4px;
+        }
+        .preview-body .module-subtitle {
+            text-align: center;
+            font-size: 0.95rem;
+            color: #475569;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 16px;
+        }
+        .preview-body .section-block {
+            margin-bottom: 22px;
+        }
+        .preview-body .section-block h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #0b3b5c;
+            margin-bottom: 8px;
+            border-left: 4px solid #2d7fc1;
+            padding-left: 14px;
+        }
+        .preview-body .section-block .content {
+            padding-left: 18px;
+            font-size: 0.92rem;
+            color: #1e293b;
+        }
+        .preview-body .section-block .content ul,
+        .preview-body .section-block .content ol {
+            padding-left: 24px;
+            margin: 4px 0;
+        }
+        .preview-body .section-block .content li {
+            margin-bottom: 2px;
+        }
+        .preview-body .section-block .content .item-label {
+            font-weight: 600;
+            color: #0b3b5c;
+        }
+        .preview-body .section-block .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 0.88rem;
+        }
+        .preview-body .section-block .content table th,
+        .preview-body .section-block .content table td {
+            border: 1px solid #d1d9e6;
+            padding: 8px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .preview-body .section-block .content table th {
+            background: #eef2f7;
+            font-weight: 700;
+            color: #0b3b5c;
+        }
+        .preview-body .empty-state {
+            color: #94a3b8;
+            font-style: italic;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .preview-body .empty-state .icon {
+            font-size: 2.8rem;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #0b3b5c;
+            color: #fff;
+            padding: 16px 28px;
+            border-radius: 14px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.20);
+            font-weight: 500;
+            transform: translateY(80px);
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 999;
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        @media (max-width: 700px) {
+            .card {
+                padding: 18px;
+            }
+            .preview-body {
+                padding: 18px;
+                max-height: 500px;
+            }
+            .preview-header {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+            .preview-header .preview-actions {
+                justify-content: center;
+            }
+            .check-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            body {
+                background: #fff !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .no-print,
+            .app>.card:first-child,
+            .app>.card:first-child *,
+            .preview-header .preview-actions,
+            .preview-header .btn,
+            .btn-group,
+            .toast,
+            .preview-actions,
+            .card-header .badge,
+            .app>.card:first-child .btn-group,
+            .app>.card:first-child .btn,
+            .app>.card:first-child form,
+            .app>.card:first-child input,
+            .app>.card:first-child select,
+            .app>.card:first-child textarea,
+            .app>.card:first-child .check-grid,
+            .app>.card:first-child .form-group,
+            .app>.card:first-child .form-row,
+            .app>.card:first-child .card-header,
+            .app>.card:first-child h3,
+            .app>.card:first-child .btn-group,
+            .app>.card:first-child .btn-primary,
+            .app>.card:first-child .btn-success,
+            .app>.card:first-child .btn-outline,
+            .preview-header .preview-actions .btn,
+            #printBtn,
+            #printBtnPreview,
+            #updatePreviewBtn,
+            #resetBtn {
+                display: none !important;
+            }
+            .app {
+                display: block !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .preview-wrap {
+                position: static !important;
+                box-shadow: none !important;
+                border: none !important;
+                border-radius: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+            }
+            .preview-header {
+                background: #0b3b5c !important;
+                color: #fff !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                padding: 12px 20px !important;
+                margin: 0 !important;
+                display: block !important;
+                text-align: center !important;
+            }
+            .preview-header h2 {
+                font-size: 1.2rem !important;
+                margin: 0 !important;
+                display: block !important;
+                text-align: center !important;
+            }
+            .preview-header .preview-actions {
+                display: none !important;
+            }
+            .preview-body {
+                max-height: none !important;
+                overflow: visible !important;
+                padding: 20px 25px !important;
+                background: #fff !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .preview-body .module-title {
+                font-size: 1.8rem !important;
+                color: #0b3b5c !important;
+            }
+            .preview-body .module-subtitle {
+                font-size: 1rem !important;
+                border-bottom-color: #ccc !important;
+            }
+            .preview-body .section-block {
+                page-break-inside: avoid;
+                margin-bottom: 18px !important;
+            }
+            .preview-body .section-block h3 {
+                font-size: 1.1rem !important;
+            }
+            .preview-body .section-block .content {
+                font-size: 0.9rem !important;
+                padding-left: 14px !important;
+            }
+            .preview-body .section-block .content p {
+                margin: 4px 0 !important;
+            }
+            .preview-body .section-block .content ul {
+                padding-left: 20px !important;
+                margin: 2px 0 !important;
+            }
+            @page {
+                margin: 1.2cm 1.5cm;
+                size: A4 portrait;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="toast" class="toast">✅ Modul berhasil diperbarui</div>
+
+    <div class="app" id="app">
+
+        <div class="card no-print">
+            <div class="card-header">
+                <h2>📝 Editor Modul Ajar Kokurikuler</h2>
+                <span class="badge">P5 - 7 Tema</span>
+            </div>
+            <form id="moduleForm" autocomplete="off">
+
+                <div style="margin-bottom:28px;">
+                    <h3 style="font-size:1rem; color:#0b3b5c; margin-bottom:14px; border-bottom:2px solid #eef2f7; padding-bottom:8px;">A. Identitas Umum</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Satuan Pendidikan</label>
+                            <input type="text" id="satuan" value="SMP ISLAM NW KUMBUNG" />
+                        </div>
+                        <div class="form-group">
+                            <label>Nama Penyusun</label>
+                            <input type="text" id="pendidik" value="RAHMAT GUFRON TSANI" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>NIP</label>
+                            <input type="text" id="nip" value="NIP." />
+                        </div>
+                        <div class="form-group">
+                            <label>Mata Pelajaran Terkait</label>
+                            <select id="mapel">
+                                <option value="PPKn, IPA, Bahasa Indonesia, Seni Budaya, Prakarya" selected>PPKn, IPA, Bahasa Indonesia, Seni Budaya, Prakarya</option>
+                                <option value="PPKn, IPS, Bahasa Indonesia, Matematika">PPKn, IPS, Bahasa Indonesia, Matematika</option>
+                                <option value="IPA, Matematika, Bahasa Indonesia, Seni Budaya">IPA, Matematika, Bahasa Indonesia, Seni Budaya</option>
+                                <option value="PJOK, IPA, Bahasa Indonesia">PJOK, IPA, Bahasa Indonesia</option>
+                                <option value="PPKn, Bahasa Indonesia, IPS">PPKn, Bahasa Indonesia, IPS</option>
+                                <option value="Informatika, IPA, Matematika, Bahasa Indonesia">Informatika, IPA, Matematika, Bahasa Indonesia</option>
+                                <option value="Prakarya, Matematika, Bahasa Indonesia, Seni Budaya">Prakarya, Matematika, Bahasa Indonesia, Seni Budaya</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Fase / Kelas</label>
+                            <select id="jenjang">
+                                <option value="Fase A / Kelas 1-2 SD">Fase A / Kelas 1-2 SD</option>
+                                <option value="Fase B / Kelas 3-4 SD">Fase B / Kelas 3-4 SD</option>
+                                <option value="Fase C / Kelas 5-6 SD">Fase C / Kelas 5-6 SD</option>
+                                <option value="Fase D / Kelas 7-9 SMP" selected>Fase D / Kelas 7-9 SMP</option>
+                                <option value="Fase E / Kelas 10 SMA">Fase E / Kelas 10 SMA</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Alokasi Waktu</label>
+                            <input type="text" id="alokasiWaktu" value="48 JP (6 pertemuan)" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Tahun Ajaran</label>
+                            <input type="text" id="tahun" value="2025/2026" />
+                        </div>
+                        <div class="form-group">
+                            <label>Target Peserta Didik</label>
+                            <input type="text" id="target" value="32 siswa, heterogen (visual, kinestetik, analitis)" />
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:28px;">
+                    <h3 style="font-size:1rem; color:#0b3b5c; margin-bottom:14px; border-bottom:2px solid #eef2f7; padding-bottom:8px;">B. Tema P5 &amp; Topik</h3>
+                    <div class="form-group">
+                        <label>Tema Utama P5</label>
+                        <select id="temaP5">
+                            <option value="gaya-hidup-berkelanjutan">🌿 Gaya Hidup Berkelanjutan</option>
+                            <option value="kearifan-lokal">🏮 Kearifan Lokal</option>
+                            <option value="bhinneka-tunggal-ika" selected>🤝 Bhinneka Tunggal Ika</option>
+                            <option value="bangun-jiwa-raga">💪 Bangunlah Jiwa dan Raganya</option>
+                            <option value="suara-demokrasi">🗳️ Suara Demokrasi</option>
+                            <option value="teknologi-nkri">🔧 Berekayasa dan Berteknologi untuk NKRI</option>
+                            <option value="kewirausahaan">💰 Kewirausahaan</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Topik Spesifik</label>
+                        <input type="text" id="topik" value="" placeholder="Contoh: Kreasi Daur Ulang Sampah Plastik" />
+                    </div>
+                    <div class="form-group">
+                        <label>Deskripsi Projek</label>
+                        <textarea id="deskripsi" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:28px;">
+                    <h3 style="font-size:1rem; color:#0b3b5c; margin-bottom:14px; border-bottom:2px solid #eef2f7; padding-bottom:8px;">C. Dimensi &amp; Elemen Profil Pelajar Pancasila</h3>
+                    <div class="form-group">
+                        <label>Pilih Dimensi yang Difokuskan</label>
+                        <div class="check-grid" id="dimensiGrid">
+                            <label><input type="checkbox" value="Beriman, Bertakwa kepada Tuhan YME, dan Berakhlak Mulia" /> Beriman &amp; Bertakwa</label>
+                            <label><input type="checkbox" value="Bergotong Royong" checked /> Bergotong Royong</label>
+                            <label><input type="checkbox" value="Bernalar Kritis" checked /> Bernalar Kritis</label>
+                            <label><input type="checkbox" value="Kreatif" checked /> Kreatif</label>
+                            <label><input type="checkbox" value="Mandiri" /> Mandiri</label>
+                            <label><input type="checkbox" value="Berkebhinekaan Global" /> Berkebhinekaan Global</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Elemen &amp; Sub-elemen yang Dituju</label>
+                        <textarea id="elemen" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:28px;">
+                    <h3 style="font-size:1rem; color:#0b3b5c; margin-bottom:14px; border-bottom:2px solid #eef2f7; padding-bottom:8px;">D. Tujuan Projek</h3>
+                    <div class="form-group">
+                        <textarea id="tujuan" rows="4"></textarea>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:28px;">
+                    <h3 style="font-size:1rem; color:#0b3b5c; margin-bottom:14px; border-bottom:2px solid #eef2f7; padding-bottom:8px;">E. Alur Aktivitas Projek</h3>
+                    <div class="form-group">
+                        <label>Tahapan &amp; Aktivitas (format: Tahap|Aktivitas|JP) <span class="hint">JP tiap tahap otomatis dibagi dari Alokasi Waktu, tapi tetap bisa diedit manual</span></label>
+                        <textarea id="alurAktivitas" rows="6"></textarea>
+                        <div style="display:flex; align-items:center; gap:10px; margin-top:8px;">
+                            <button type="button" id="autoBagiJPBtn" class="btn btn-outline" style="padding:7px 16px; font-size:0.82rem;">🔄 Auto-bagi JP dari Alokasi Waktu</button>
+                            <span id="alurJPStatus" style="font-size:0.8rem; font-weight:600;"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:28px;">
+                    <h3 style="font-size:1rem; color:#0b3b5c; margin-bottom:14px; border-bottom:2px solid #eef2f7; padding-bottom:8px;">F. Asesmen (Penilaian)</h3>
+                    <div class="form-group">
+                        <label>Jenis &amp; Bentuk Asesmen <span class="hint">(Format manual: Jenis Asesmen | Bentuk | Keterangan. Gunakan enter untuk baris baru)</span></label>
+                        <textarea id="asesmen" rows="5" placeholder="Contoh:&#10;Diagnostik | Kuis Isian Singkat | Dilakukan di awal pertemuan&#10;Formatif | Rubrik Observasi & Jurnal | Dilakukan selama proses projek&#10;Sumatif | Penilaian Produk & Presentasi | Dilakukan di akhir projek"></textarea>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:28px;">
+                    <h3 style="font-size:1rem; color:#0b3b5c; margin-bottom:14px; border-bottom:2px solid #eef2f7; padding-bottom:8px;">G. Rubrik Penilaian</h3>
+                    <div class="form-group">
+                        <textarea id="rubrik" rows="5"></textarea>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:28px;">
+                    <h3 style="font-size:1rem; color:#0b3b5c; margin-bottom:14px; border-bottom:2px solid #eef2f7; padding-bottom:8px;">H. Lembar Refleksi Siswa</h3>
+                    <div class="form-group">
+                        <textarea id="refleksi" rows="4"></textarea>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:18px;">
+                    <h3 style="font-size:1rem; color:#0b3b5c; margin-bottom:14px; border-bottom:2px solid #eef2f7; padding-bottom:8px;">I. Tanda Tangan</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Kepala Sekolah</label>
+                            <input type="text" id="kepsek" value="RAHMAT GUFRON TSANI" />
+                        </div>
+                        <div class="form-group">
+                            <label>NIP Kepala Sekolah</label>
+                            <input type="text" id="nipKepsek" value="NIP." />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nama Penyusun</label>
+                            <input type="text" id="pendidikTtd" value="RAHMAT GUFRON TSANI" />
+                        </div>
+                        <div class="form-group">
+                            <label>NIP Penyusun</label>
+                            <input type="text" id="nipPendidikTtd" value="NIP." />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tempat / Tanggal</label>
+                        <input type="text" id="tempatTgl" value="Lombok Timur, 12 Mei 2025" />
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary" id="updatePreviewBtn">🔄 Perbarui Pratinjau</button>
+                    <button type="button" class="btn btn-success" id="printBtn">🖨️ Cetak / PDF</button>
+                    <button type="button" class="btn btn-outline" id="resetBtn">↺ Reset ke Contoh</button>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="preview-wrap" id="previewWrap">
+            <div class="preview-header">
+                <h2>📄 Pratinjau Modul P5</h2>
+                <div class="preview-actions no-print">
+                    <button class="btn btn-success" id="printBtnPreview" style="background:#fff;color:#0b3b5c;">🖨️ Cetak</button>
+                </div>
+            </div>
+            <div class="preview-body" id="previewBody">
+                <div class="empty-state">
+                    <span class="icon">📋</span>
+                    <p>Isi form di sebelah kiri, lalu klik<br /><strong>"Perbarui Pratinjau"</strong></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            const previewBody = document.getElementById('previewBody');
+            const toast = document.getElementById('toast');
+            let toastTimer = null;
+
+            function getVal(id) {
+                const el = document.getElementById(id);
+                if (!el) return '';
+                if (el.tagName === 'SELECT') return el.options[el.selectedIndex]?.value || '';
+                return el.value || '';
+            }
+
+            function getCheckboxes(gridId) {
+                const container = document.getElementById(gridId);
+                if (!container) return [];
+                const checks = container.querySelectorAll('input[type="checkbox"]:checked');
+                return Array.from(checks).map(cb => cb.value || cb.nextSibling?.textContent?.trim() || 'Item').filter(Boolean);
+            }
+
+            function showToast(msg) {
+                toast.textContent = msg || '✅ Modul diperbarui';
+                toast.classList.add('show');
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+            }
+
+            // ── Sinkronisasi JP Alur Aktivitas dengan Alokasi Waktu ──
+            function extractJPNumber(str) {
+                if (!str) return null;
+                const m = str.match(/(\d+)\s*JP/i);
+                return m ? parseInt(m[1]) : null;
+            }
+
+            function distributeJPFromAlokasi(silent) {
+                const alokasiEl = document.getElementById('alokasiWaktu');
+                const alurEl = document.getElementById('alurAktivitas');
+                const totalJP = extractJPNumber(alokasiEl.value);
+
+                if (!totalJP) {
+                    if (!silent) showToast('⚠️ Tuliskan jumlah JP pada Alokasi Waktu dulu (contoh: 48 JP)');
+                    updateAlurJPStatus();
+                    return;
+                }
+
+                const rawLines = alurEl.value.split('\n').filter(l => l.trim());
+                if (!rawLines.length) {
+                    if (!silent) showToast('⚠️ Isi dulu Tahap & Aktivitas pada Alur Aktivitas');
+                    updateAlurJPStatus();
+                    return;
+                }
+
+                const stages = rawLines.map(line => {
+                    const parts = line.split('|');
+                    return {
+                        tahap: (parts[0] || '').trim(),
+                        aktivitas: (parts[1] || '').trim()
+                    };
+                });
+
+                const n = stages.length;
+                const base = Math.floor(totalJP / n);
+                let remainder = totalJP - base * n;
+
+                const newLines = stages.map((s, i) => {
+                    let jp = base;
+                    if (remainder > 0) { jp += 1; remainder--; }
+                    return `${s.tahap}|${s.aktivitas}|${jp} JP`;
+                });
+
+                alurEl.value = newLines.join('\n');
+                if (!silent) showToast(`🔄 JP dibagi otomatis: ${totalJP} JP ke ${n} tahap`);
+                updatePreview();
+            }
+
+            function updateAlurJPStatus() {
+                const statusEl = document.getElementById('alurJPStatus');
+                if (!statusEl) return;
+                const totalJP = extractJPNumber(getVal('alokasiWaktu'));
+                const alurLines = getVal('alurAktivitas').split('\n').filter(l => l.trim());
+                let sumJP = 0;
+                alurLines.forEach(line => {
+                    const parts = line.split('|');
+                    if (parts.length >= 3) {
+                        const m = parts[2].match(/\d+/);
+                        if (m) sumJP += parseInt(m[0]);
+                    }
+                });
+
+                if (totalJP === null) {
+                    statusEl.textContent = '';
+                    return;
+                }
+                if (sumJP === totalJP) {
+                    statusEl.textContent = `✅ Sesuai Alokasi Waktu (${totalJP} JP)`;
+                    statusEl.style.color = '#0f7b3a';
+                } else {
+                    statusEl.textContent = `⚠️ Total Alur ${sumJP} JP ≠ Alokasi Waktu ${totalJP} JP`;
+                    statusEl.style.color = '#c0392b';
+                }
+            }
+
+            // ── TEMPLATE LENGKAP 7 TEMA P5 DENGAN FORMAT ASESMEN MANUAL ──
+            const themeTemplates = {
+                'gaya-hidup-berkelanjutan': {
+                    topik: '"Kreasi Daur Ulang Sampah Plastik Menjadi Produk Bernilai Ekonomis"',
+                    deskripsi: 'Projek ini bertujuan mengajak siswa peduli lingkungan sekaligus belajar kewirausahaan. Siswa akan melakukan riset mengenai jenis sampah plastik di lingkungan sekolah dan rumah, merancang produk kerajinan fungsional (tas belanja, tempat pensil, atau gantungan kunci) dari limbah plastik, memproduksi secara kelompok, lalu memasarkan produk tersebut dalam acara "Bazar Peduli Lingkungan" di sekolah. Hasil penjualannya akan disumbangkan untuk kegiatan penghijauan sekolah.',
+                    elemen: 'Bergotong Royong - Kolaborasi: Bekerja sama dalam kelompok pembuatan produk, membagi tugas secara adil.\nBernalar Kritis - Memperoleh dan Memproses Informasi: Menganalisis data sampah plastik yang dikumpulkan, memilih jenis plastik yang paling layak daur ulang.\nKreatif - Menghasilkan Karya dan Tindakan yang Orisinal: Menciptakan desain produk daur ulang yang estetis, fungsional, dan memiliki nilai jual.',
+                    tujuan: '1. Mengidentifikasi minimal 3 jenis sampah plastik yang ada di lingkungan sekitar dan dampaknya terhadap ekosistem.\n2. Menerapkan prinsip kolaborasi dengan membagi peran secara efektif dalam kelompok produksi.\n3. Menghasilkan minimal 1 jenis produk daur ulang (tas/tempat pensil) dengan teknik fusible plastic yang rapi dan tahan lama.\n4. Menyusun rencana pemasaran sederhana (harga pokok produksi, harga jual, dan strategi promosi) untuk produk mereka.',
+                    alur: 'Pengenalan|Pemantik: Menonton video "Plastic Ocean" (5 menit). Diskusi: Mengapa plastik berbahaya? Bagaimana mengubahnya jadi barang berguna? Asesmen Diagnostik: Siswa menulis di sticky note tentang pengetahuan mereka tentang daur ulang.|8 JP\nKontekstualisasi|Observasi Lapangan: Siswa berkeliling sekolah dan lingkungan sekitar untuk mengidentifikasi jenis sampah plastik (kantong kresek, botol, sedotan, bungkus snack). Data: Mencatat dan menghitung jumlah sampah di 3 titik berbeda (kantin, taman, kelas). Kesimpulan: Membuat grafik batang sederhana hasil temuan.|10 JP\nAksi (Eksekusi)|Design Thinking: Brainstorming ide produk (tas belanja, dompet, atau gantungan). Teknik Produksi: Siswa belajar teknik fusible plastic (menyetrika beberapa lapis plastik dengan kertas roti). Produksi: Membuat produk masing-masing kelompok. Kalkulasi: Menghitung modal bahan baku dan menentukan harga jual. Promosi: Membuat poster/IG story untuk promosi produk.|22 JP\nRefleksi & Tindak Lanjut|Pameran/Bazar: Menampilkan produk di stand sekolah (mengundang guru, orang tua, dan adik kelas). Refleksi: Siswa mengisi lembar refleksi: "Apa tantangan terbesar selama proses produksi?" Evaluasi: Guru memberikan umpan balik terkait kreativitas dan kerja sama kelompok. Aksi Nyata: Hasil penjualan diserahkan ke OSIS untuk pembelian bibit pohon di sekolah.|8 JP',
+                    asesmen: 'Diagnostik (Awal) | Kuis Isian Singkat | Pertanyaan umum mengenai jenis sampah dan ekosistem\nFormatif (Proses) | Rubrik Observasi Kolaborasi & Jurnal Harian | Menilai keaktifan kelompok dan catatan harian siswa\nSumatif (Akhir) | Rubrik Penilaian Produk & Presentasi | Menilai estetika, kekuatan produk, dan kemampuan promosi',
+                    rubrik: '| Aspek | Sangat Baik (4) | Baik (3) | Cukup (2) | Kurang (1) |\n|-------|-----------------|----------|-----------|------------|\n| Produk (Kreatif) | Produk sangat orisinal, rapi, kuat, dan estetis | Produk cukup kreatif, rapi, dan fungsional | Produk sederhana namun fungsional | Produk kurang rapi dan tidak fungsional |\n| Kolaborasi | Sangat aktif, menjadi penggerak, membantu anggota lain | Aktif berpartisipasi dan menjalankan peran | Terlibat dengan dorongan | Tidak terlibat |\n| Penalaran Kritis | Mampu menganalisis data sampah dengan sangat baik | Mampu menganalisis data dengan baik | Mampu menganalisis data secara sederhana | Belum mampu menganalisis data |\n| Presentasi | Menyampaikan dengan percaya diri, menarik, dan meyakinkan | Menyampaikan dengan jelas dan meyakinkan | Menyampaikan cukup jelas | Kurang meyakinkan |',
+                    refleksi: '1. Apa hal paling berkesan yang kamu pelajari selama membuat produk daur ulang ini?\n2. Jika kelompokmu harus mengulang proses ini, bagian mana yang akan kalian perbaiki agar lebih efektif?\n3. Menurutmu, produk daur ulang apa yang paling laris di bazar tadi? Mengapa?\n4. Bagaimana perasaanmu setelah mengetahui bahwa hasil penjualan akan digunakan untuk penghijauan sekolah?'
+                },
+                'kearifan-lokal': {
+                    topik: '"Melestarikan Warisan Leluhur: Eksplorasi Budaya dan Kesenian Daerah"',
+                    deskripsi: 'Projek ini mengajak siswa untuk mengenal, mendokumentasikan, dan melestarikan kearifan lokal di daerah mereka. Siswa akan melakukan riset tentang tradisi, makanan, kesenian, atau kerajinan khas daerah, lalu membuat karya atau pertunjukan yang mempromosikan kekayaan budaya lokal kepada masyarakat sekolah.',
+                    elemen: 'Berkebhinekaan Global - Mengenal dan Menghargai Budaya: Memahami kekayaan budaya lokal dan pentingnya pelestarian.\nKreatif - Menghasilkan Karya: Menciptakan karya seni atau produk budaya yang inovatif.\nBergotong Royong - Kolaborasi: Bekerja sama dalam kelompok untuk riset dan produksi karya.',
+                    tujuan: '1. Mengidentifikasi minimal 3 jenis kearifan lokal (tradisi, makanan, kesenian, atau kerajinan) yang ada di daerahnya.\n2. Mendokumentasikan proses dan hasil riset budaya dalam bentuk video, poster, atau buku saku.\n3. Menghasilkan karya atau pertunjukan yang mempromosikan budaya lokal.\n4. Menumbuhkan rasa bangga dan cinta terhadap budaya daerah.',
+                    alur: 'Pengenalan|Pemantik: Menonton video tentang kekayaan budaya Indonesia. Diskusi: Apa yang membuat budaya daerah kita unik? Mengapa perlu dilestarikan?|8 JP\nKontekstualisasi|Riset Lapangan: Siswa mengunjungi sanggar seni, rumah adat, atau mewawancarai tokoh budaya. Dokumentasi: Mencatat dan memfoto tradisi, makanan, atau kesenian khas daerah.|10 JP\nAksi (Eksekusi)|Kreasi: Siswa memilih salah satu bentuk ekspresi (tari, musik, teater, seni rupa, atau kuliner). Produksi: Berlatih dan memproduksi karya. Kemasan: Membuat poster atau kemasan menarik untuk promosi.|22 JP\nRefleksi & Tindak Lanjut|Pentas/Pameran: Menampilkan karya di acara sekolah (mengundang orang tua dan masyarakat). Refleksi: Siswa menulis tentang pengalaman belajar budaya lokal. Aksi Nyata: Membuat buku saku atau video dokumenter yang bisa dibagikan ke adik kelas.|8 JP',
+                    asesmen: 'Diagnostik (Awal) | Kuis Budaya Daerah | Menguji pemahaman awal siswa mengenai ragam budaya setempat\nFormatif (Proses) | Jurnal Hasil Wawancara & Observasi | Memantau keaktifan riset dan kualitas data lapangan\nSumatif (Akhir) | Penilaian Karya & Presentasi | Menilai pameran/pertunjukan kebudayaan dan laporan riset kelompok',
+                    rubrik: '| Aspek | Sangat Baik (4) | Baik (3) | Cukup (2) | Kurang (1) |\n|-------|-----------------|----------|-----------|------------|\n| Pemahaman Budaya | Mampu menjelaskan >5 aspek budaya dengan contoh nyata | Mampu menjelaskan 3-5 aspek dengan contoh | Mampu menjelaskan <3 aspek | Belum memahami budaya lokal |\n| Kreativitas Karya | Karya sangat orisinal dan mengangkat nilai budaya | Karya cukup kreatif dan bernilai budaya | Karya sederhana | Karya kurang menarik |\n| Kolaborasi | Sangat aktif dan kooperatif | Aktif dan bertanggung jawab | Cukup aktif | Kurang aktif |\n| Presentasi | Menyampaikan dengan percaya diri dan menginspirasi | Menyampaikan dengan jelas | Menyampaikan cukup jelas | Kurang jelas |',
+                    refleksi: '1. Apa hal baru yang kamu pelajari tentang budaya daerahmu?\n2. Bagaimana perasaanmu setelah mengenal lebih dalam warisan leluhur?\n3. Apa yang akan kamu lakukan untuk membantu melestarikan budaya lokal?'
+                },
+                'bhinneka-tunggal-ika': {
+                    topik: '"Bhinneka Tunggal Ika: Merayakan Keberagaman di Sekolah"',
+                    deskripsi: 'Projek ini bertujuan menumbuhkan sikap toleransi dan menghargai keberagaman suku, agama, dan budaya di lingkungan sekolah. Siswa akan melakukan riset tentang keragaman teman-teman sekelas, membuat karya yang merayakan perbedaan, dan menyelenggarakan acara "Festival Bhinneka" yang melibatkan seluruh warga sekolah.',
+                    elemen: 'Berkebhinekaan Global - Menghargai Keberagaman: Memahami dan menghormati perbedaan suku, agama, dan budaya.\nBergotong Royong - Kolaborasi: Bekerja sama lintas latar belakang untuk menciptakan karya bersama.\nBeriman & Bertakwa - Toleransi Beragama: Menghormati keyakinan dan praktik keagamaan orang lain.',
+                    tujuan: '1. Mengidentifikasi minimal 5 keragaman (suku, agama, bahasa, budaya) di lingkungan sekolah.\n2. Menghasilkan karya (poster, video, atau pertunjukan) yang merayakan keberagaman.\n3. Menyelenggarakan "Festival Bhinneka" yang melibatkan seluruh warga sekolah.\n4. Mengembangkan sikap toleransi dan menghargai perbedaan dalam kehidupan sehari-hari.',
+                    alur: 'Pengenalan|Pemantik: Menonton video tentang keberagaman Indonesia. Diskusi: Apa arti Bhinneka Tunggal Ika? Mengapa penting menjaga persatuan?|8 JP\nKontekstualisasi|Riset Sosial: Siswa mewawancarai teman-teman tentang latar belakang suku, agama, dan budaya. Data: Membuat peta keberagaman kelas/sekolah.|10 JP\nAksi (Eksekusi)|Kreasi: Siswa membuat poster, video, atau pertunjukan yang merayakan keberagaman. Persiapan: Latihan dan persiapan "Festival Bhinneka".|22 JP\nRefleksi & Tindak Lanjut|Festival: Menyelenggarakan acara yang menampilkan keberagaman (pameran budaya, pentas seni, bazar makanan khas). Refleksi: Siswa menulis tentang pengalaman belajar toleransi. Aksi Nyata: Membuat komitmen bersama untuk menjaga kerukunan.|8 JP',
+                    asesmen: 'Diagnostik (Awal) | Kuis Wawasan Kebangsaan | Mengukur pemahaman dasar tentang konsep pluralisme\nFormatif (Proses) | Lembar Refleksi & Catatan Wawancara | Mengevaluasi kedalaman interaksi sosial antarsiswa\nSumatif (Akhir) | Rubrik Festival & Karya Kreatif | Penilaian performa festival seni serta keaslian poster/video',
+                    rubrik: '| Aspek | Sangat Baik (4) | Baik (3) | Cukup (2) | Kurang (1) |\n|-------|-----------------|----------|-----------|------------|\n| Pemahaman Keberagaman | Mampu menjelaskan >5 keragaman dengan contoh nyata | Mampu menjelaskan 3-5 keragaman | Mampu menjelaskan <3 keragaman | Belum memahami keberagaman |\n| Sikap Toleransi | Menunjukkan sikap menghargai perbedaan secara konsisten | Menunjukkan sikap menghargai perbedaan | Cukup menghargai perbedaan | Kurang menghargai perbedaan |\n| Kolaborasi | Sangat kooperatif dan inklusif | Kooperatif dan inklusif | Cukup kooperatif | Kurang kooperatif |\n| Kreativitas Karya | Karya sangat kreatif dan inspiratif | Karya kreatif dan informatif | Karya cukup menarik | Karya kurang menarik |',
+                    refleksi: '1. Apa hal baru yang kamu pelajari tentang teman-temanmu yang berbeda latar belakang?\n2. Bagaimana perasaanmu setelah mengenal lebih dalam keberagaman di sekolah?\n3. Apa yang akan kamu lakukan untuk menjaga kerukunan di sekolah dan masyarakat?'
+                },
+                'bangun-jiwa-raga': {
+                    topik: '"Sehat Jiwa dan Raga: Kampanye Hidup Sehat dan Anti-Bullying"',
+                    deskripsi: 'Projek ini bertujuan meningkatkan kesadaran siswa tentang pentingnya kesehatan fisik, mental, dan pencegahan bullying. Siswa akan melakukan riset tentang pola hidup sehat dan dampak bullying, membuat kampanye kreatif, dan menyelenggarakan kegiatan "Sehat Bersama" di sekolah.',
+                    elemen: 'Mandiri - Kesehatan: Menjalankan pola hidup sehat dan menjaga keseimbangan fisik dan mental.\nBernalar Kritis - Memproses Informasi: Menganalisis dampak bullying dan pentingnya kesehatan mental.\nKomunikasi - Menyampaikan Pendapat: Mengkampanyekan hidup sehat dan anti-bullying secara efektif.',
+                    tujuan: '1. Mengidentifikasi minimal 3 komponen pola hidup sehat (makanan, olahraga, istirahat).\n2. Menganalisis dampak bullying terhadap kesehatan mental korban dan pelaku.\n3. Menghasilkan kampanye (poster, video, atau drama) tentang hidup sehat dan anti-bullying.\n4. Menyelenggarakan kegiatan "Sehat Bersama" (senam, pemeriksaan kesehatan, atau talkshow).',
+                    alur: 'Pengenalan|Pemantik: Menonton video tentang hidup sehat dan dampak bullying. Diskusi: Apa itu sehat jiwa dan raga? Bagaimana mencegah bullying?|8 JP\nKontekstualisasi|Riset: Siswa mengumpulkan data tentang pola hidup sehat dan kasus bullying di sekolah. Wawancara: Dengan guru BK atau ahli kesehatan.|10 JP\nAksi (Eksekusi)|Kampanye: Siswa membuat poster, video, atau drama tentang hidup sehat dan anti-bullying. Persiapan: Latihan dan persiapan kegiatan "Sehat Bersama".|22 JP\nRefleksi & Tindak Lanjut|Kegiatan "Sehat Bersama": Senam bersama, pemeriksaan kesehatan, talkshow. Refleksi: Siswa menulis komitmen untuk hidup sehat dan menjadi agen anti-bullying. Aksi Nyata: Membuat pojok kesehatan di sekolah.|8 JP',
+                    asesmen: 'Diagnostik (Awal) | Angket Pola Hidup & Perundungan | Mengetahui kebiasaan kesehatan fisik dan iklim sosial siswa\nFormatif (Proses) | Lembar Pantauan Kampanye Kelompok | Menilai kelancaran pembuatan media sosialisasi\nSumatif (Akhir) | Evaluasi Aksi Nyata & Presentasi | Penilaian komitmen bebas bullying dan pelaksanaan event bersama',
+                    rubrik: '| Aspek | Sangat Baik (4) | Baik (3) | Cukup (2) | Kurang (1) |\n|-------|-----------------|----------|-----------|------------|\n| Pemahaman Hidup Sehat | Mampu menjelaskan >5 komponen hidup sehat | Mampu menjelaskan 3-5 komponen | Mampu menjelaskan <3 komponen | Belum memahami hidup sehat |\n| Pemahaman Dampak Bullying | Mampu menganalisis dampak bullying dengan sangat baik | Mampu menganalisis dampak bullying dengan baik | Mampu menganalisis secara sederhana | Belum mampu menganalisis |\n| Kreativitas Kampanye | Kampanye sangat kreatif dan informatif | Kampanye kreatif dan informatif | Kampanye cukup menarik | Kampanye kurang menarik |\n| Komunikasi | Menyampaikan pesan dengan meyakinkan dan menginspirasi | Menyampaikan pesan dengan jelas | Menyampaikan cukup jelas | Kurang jelas |',
+                    refleksi: '1. Apa yang paling kamu sukai dari kegiatan ini?\n2. Bagaimana perasaanmu setelah belajar tentang pentingnya kesehatan mental?\n3. Apa yang akan kamu lakukan untuk menjadi agen anti-bullying di sekolah?'
+                },
+                'suara-demokrasi': {
+                    topik: '"Suara Demokrasi: Simulasi Pemilihan Ketua OSIS dan Musyawarah"',
+                    deskripsi: 'Projek ini memberikan pengalaman langsung kepada siswa tentang proses demokrasi. Siswa akan belajar tentang prinsip-prinsip demokrasi, melakukan simulasi pemilihan ketua OSIS atau pemilihan ketua kelas, dan menyelenggarakan musyawarah untuk mengambil keputusan bersama.',
+                    elemen: 'Mandiri - Pengambilan Keputusan: Berpartisipasi dalam musyawarah dan pemilihan secara bertanggung jawab.\nBernalar Kritis - Analisis: Menganalisis visi-misi kandidat dan membuat keputusan berdasarkan informasi.\nKomunikasi - Menyampaikan Pendapat: Mengemukakan aspirasi dan berargumen secara santun dalam musyawarah.',
+                    tujuan: '1. Memahami prinsip-prinsip demokrasi (kebebasan berpendapat, musyawarah, pemilihan).\n2. Berpartisipasi dalam simulasi pemilihan ketua OSIS atau ketua kelas.\n3. Menyelenggarakan musyawarah untuk mengambil keputusan bersama.\n4. Mengembangkan sikap menghargai pendapat orang lain dan sportivitas.',
+                    alur: 'Pengenalan|Pemantik: Menonton video tentang proses pemilu di Indonesia. Diskusi: Apa itu demokrasi? Mengapa penting bagi kehidupan berbangsa?|8 JP\nKontekstualisasi|Riset: Siswa belajar tentang mekanisme pemilihan dan musyawarah. Wawancara: Dengan pengurus OSIS atau tokoh masyarakat.|10 JP\nAksi (Eksekusi)|Simulasi: Siswa mendaftar sebagai kandidat, menyusun visi-misi, kampanye. Pemungutan Suara: Melakukan simulasi pemilihan dengan sistem yang demokratis.|22 JP\nRefleksi & Tindak Lanjut|Pelantikan: Mengumumkan hasil pemilihan dan melantik pengurus terpilih. Refleksi: Siswa menulis tentang pengalaman berdemokrasi. Aksi Nyata: Pengurus terpilih menyusun program kerja.|8 JP',
+                    asesmen: 'Diagnostik (Awal) | Tes Pemahaman Tata Negara | Mendeteksi pemahaman awal aturan pemilu dan musyawarah\nFormatif (Proses) | Lembar Observasi Orasi & Debat | Menilai kemampuan orasi publik serta etika berdebat santun\nSumatif (Akhir) | Penilaian Dokumen Visi-Misi & Laporan | Menilai dokumen portofolio panitia pemilu dan kandidat ketua',
+                    rubrik: '| Aspek | Sangat Baik (4) | Baik (3) | Cukup (2) | Kurang (1) |\n|-------|-----------------|----------|-----------|------------|\n| Pemahaman Demokrasi | Mampu menjelaskan prinsip demokrasi dengan sangat baik | Mampu menjelaskan prinsip demokrasi dengan baik | Mampu menjelaskan secara sederhana | Belum memahami demokrasi |\n| Partisipasi Aktif | Sangat aktif dalam seluruh tahapan | Aktif dalam sebagian besar tahapan | Cukup aktif | Kurang aktif |\n| Komunikasi | Menyampaikan gagasan dengan meyakinkan dan santun | Menyampaikan gagasan dengan jelas dan santun | Menyampaikan cukup jelas | Kurang jelas |\n| Sikap Sportif | Menerima hasil dengan lapang dada dan dewasa | Menerima hasil dengan baik | Cukup menerima hasil | Kurang bisa menerima hasil |',
+                    refleksi: '1. Apa yang paling kamu pelajari dari simulasi pemilihan ini?\n2. Bagaimana perasaanmu setelah mengikuti proses demokrasi?\n3. Apa yang akan kamu lakukan untuk menjadi pemimpin yang baik di masa depan?'
+                },
+                'teknologi-nkri': {
+                    topik: '"Inovasi Teknologi Sederhana untuk Kehidupan Sehari-hari"',
+                    deskripsi: 'Projek ini mengajak siswa untuk berpikir kreatif dan inovatif dalam menciptakan teknologi sederhana yang bermanfaat bagi kehidupan sehari-hari. Siswa akan melakukan riset tentang masalah sehari-hari, merancang solusi teknologi sederhana, dan membuat prototype alat bantu.',
+                    elemen: 'Bernalar Kritis - Memecahkan Masalah: Mengidentifikasi masalah sehari-hari dan merancang solusi teknologi.\nKreatif - Menghasilkan Karya: Menciptakan prototype alat bantu yang inovatif dan fungsional.\nMandiri - Inisiatif: Mengembangkan ide secara mandiri dan bertanggung jawab terhadap proyek.',
+                    tujuan: '1. Mengidentifikasi minimal 3 masalah sehari-hari yang dapat diselesaikan dengan teknologi sederhana.\n2. Merancang solusi teknologi sederhana untuk masalah yang diidentifikasi.\n3. Menghasilkan prototype alat bantu yang fungsional dan inovatif.\n4. Mempresentasikan hasil karya dan memberikan manfaat bagi masyarakat sekolah.',
+                    alur: 'Pengenalan|Pemantik: Menonton video tentang inovasi teknologi sederhana. Diskusi: Apa itu teknologi? Bagaimana teknologi membantu kehidupan?|8 JP\nKontekstualisasi|Riset: Siswa mengidentifikasi masalah sehari-hari di lingkungan sekolah/rumah. Observasi: Mengamati kegiatan yang bisa dibantu dengan teknologi sederhana.|10 JP\nAksi (Eksekusi)|Desain: Siswa merancang solusi dan membuat sketsa/blueprint. Produksi: Membuat prototype alat bantu (menggunakan bahan sederhana). Uji Coba: Menguji dan memperbaiki prototype.|22 JP\nRefleksi & Tindak Lanjut|Pameran: Menampilkan prototype di acara sekolah. Refleksi: Siswa menulis tentang proses inovasi. Aksi Nyata: Memberikan alat bantu kepada yang membutuhkan.|8 JP',
+                    asesmen: 'Diagnostik (Awal) | Pemetaan Masalah Teknik Dasar | Mengidentifikasi keahlian logika komparatif awal siswa\nFormatif (Proses) | Logbook Uji Coba Alat & Desain | Pencatatan perkembangan kegagalan dan perbaikan sistem prototype\nSumatif (Akhir) | Rubrik Pengujian Prototype | Pengujian kekuatan alat, efisiensi guna, dan presentasi teknis',
+                    rubrik: '| Aspek | Sangat Baik (4) | Baik (3) | Cukup (2) | Kurang (1) |\n|-------|-----------------|----------|-----------|------------|\n| Inovasi Produk | Produk sangat inovatif dan solutif | Produk cukup inovatif dan solutif | Produk sederhana namun fungsional | Produk kurang fungsional |\n| Penalaran Kritis | Mampu mengidentifikasi dan menganalisis masalah dengan sangat baik | Mampu mengidentifikasi dan menganalisis masalah dengan baik | Mampu mengidentifikasi masalah secara sederhana | Belum mampu mengidentifikasi masalah |\n| Kreativitas | Desain sangat kreatif dan orisinal | Desain cukup kreatif | Desain sederhana | Desain kurang menarik |\n| Komunikasi | Menyampaikan ide dengan meyakinkan dan menginspirasi | Menyampaikan ide dengan jelas | Menyampaikan cukup jelas | Kurang jelas |',
+                    refleksi: '1. Apa tantangan terbesar dalam membuat prototype?\n2. Bagaimana perasaanmu setelah berhasil membuat alat bantu?\n3. Apa yang akan kamu kembangkan lebih lanjut dari proyek ini?'
+                },
+                'kewirausahaan': {
+                    topik: '"Dari Hobi Jadi Rupiah: Membangun Jiwa Wirausaha"',
+                    deskripsi: 'Projek ini mengajak siswa untuk mengembangkan jiwa kewirausahaan dengan memanfaatkan hobi dan minat mereka. Siswa akan melakukan riset pasar, merancang produk atau jasa, memproduksi, dan memasarkan produk dalam "Bazar Wirausaha Muda" di sekolah.',
+                    elemen: 'Mandiri - Kemandirian: Mengembangkan usaha secara mandiri dan bertanggung jawab.\nKreatif - Menghasilkan Karya: Menciptakan produk atau jasa yang inovatif dan bernilai jual.\nBergotong Royong - Kolaborasi: Bekerja sama dalam kelompok untuk mengembangkan usaha.',
+                    tujuan: '1. Mengidentifikasi peluang usaha dari hobi dan minat siswa.\n2. Merancang produk atau jasa yang inovatif dan bernilai jual.\n3. Memproduksi dan memasarkan produk dalam "Bazar Wirausaha Muda".\n4. Menghitung modal, harga pokok, dan keuntungan usaha sederhana.',
+                    alur: 'Pengenalan|Pemantik: Menonton video inspirasi pengusaha muda. Diskusi: Apa itu wirausaha? Bagaimana memulai usaha dari hobi?|8 JP\nKontekstualisasi|Riset Pasar: Siswa mengamati produk dan jasa yang diminati. Wawancara: Dengan pelaku UMKM setempat.|10 JP\nAksi (Eksekusi)|Perancangan: Siswa merancang produk atau jasa, menghitung modal dan harga jual. Produksi: Membuat produk atau menyiapkan jasa. Promosi: Membuat poster dan media promosi.|22 JP\nRefleksi & Tindak Lanjut|Bazar: Menjual produk dalam "Bazar Wirausaha Muda". Refleksi: Siswa menulis tentang pengalaman berwirausaha. Aksi Nyata: Menabung sebagian keuntungan untuk usaha berkelanjutan.|8 JP',
+                    asesmen: 'Diagnostik (Awal) | Angket Potensi & Minat Bisnis | Pemetaan awal jenis hobi/produk yang berpotensi jual tinggi\nFormatif (Proses) | Buku Catatan Kas & Desain Kemasan | Peninjauan berkala ketepatan hitungan HPP dan estetika label\nSumatif (Akhir) | Laporan Penjualan (Bazar) | Menilai omset penjualan, strategi pemasaran, dan laporan rugi laba',
+                    rubrik: '| Aspek | Sangat Baik (4) | Baik (3) | Cukup (2) | Kurang (1) |\n|-------|-----------------|----------|-----------|------------|\n| Kreativitas Produk | Produk sangat inovatif dan memiliki nilai jual tinggi | Produk cukup inovatif dan bernilai jual | Produk sederhana namun bernilai jual | Produk kurang menarik |\n| Kemandirian | Mampu menyelesaikan semua tahap secara mandiri | Mandiri dengan bimbingan minimal | Membutuhkan bimbingan sering | Sangat bergantung pada bantuan |\n| Kolaborasi | Sangat kooperatif dan membagi tugas dengan baik | Kooperatif dan menyelesaikan tugas | Cukup kooperatif | Kurang kooperatif |\n| Komunikasi | Menyampaikan ide dengan meyakinkan dan menarik | Menyampaikan dengan jelas | Menyampaikan cukup jelas | Kurang jelas |',
+                    refleksi: '1. Apa yang paling kamu pelajari dari pengalaman berwirausaha?\n2. Bagaimana perasaanmu setelah berhasil menjual produk?\n3. Apa yang akan kamu lakukan untuk mengembangkan usaha di masa depan?'
+                }
+            };
+
+            // ── Apply theme ──
+            function applyTheme(themeKey) {
+                const template = themeTemplates[themeKey];
+                if (!template) return;
+                document.getElementById('topik').value = template.topik || '';
+                document.getElementById('deskripsi').value = template.deskripsi || '';
+                document.getElementById('elemen').value = template.elemen || '';
+                document.getElementById('tujuan').value = template.tujuan || '';
+                document.getElementById('alurAktivitas').value = template.alur || '';
+                document.getElementById('asesmen').value = template.asesmen || '';
+                document.getElementById('rubrik').value = template.rubrik || '';
+                document.getElementById('refleksi').value = template.refleksi || '';
+                updatePreview();
+            }
+
+            // ── Build preview ──
+            function buildPreview() {
+                const satuan = getVal('satuan');
+                const pendidik = getVal('pendidik');
+                const nip = getVal('nip');
+                const mapel = getVal('mapel');
+                const jenjang = getVal('jenjang');
+                const alokasiWaktu = getVal('alokasiWaktu');
+                const tahun = getVal('tahun');
+                const target = getVal('target');
+
+                const temaSelect = document.getElementById('temaP5');
+                const temaText = temaSelect.options[temaSelect.selectedIndex]?.text || '—';
+                const topik = getVal('topik');
+                const deskripsi = getVal('deskripsi');
+
+                const dimensi = getCheckboxes('dimensiGrid');
+                const elemen = getVal('elemen');
+                const tujuan = getVal('tujuan');
+                const alur = getVal('alurAktivitas');
+                const asesmen = getVal('asesmen');
+                const rubrik = getVal('rubrik');
+                const refleksi = getVal('refleksi');
+
+                const kepsek = getVal('kepsek');
+                const nipKepsek = getVal('nipKepsek');
+                const pendidikTtd = getVal('pendidikTtd');
+                const nipPendidikTtd = getVal('nipPendidikTtd');
+                const tempatTgl = getVal('tempatTgl');
+
+                // Parse alur aktivitas
+                let alurHTML = '';
+                if (alur) {
+                    const lines = alur.split('\n').filter(l => l.trim());
+                    alurHTML =
+                        `<table><thead><tr><th>Tahap</th><th>Aktivitas / Kegiatan Utama</th><th>JP</th></tr></thead><tbody>`;
+                    let totalJP = 0;
+                    lines.forEach(line => {
+                        const parts = line.split('|');
+                        if (parts.length >= 3) {
+                            alurHTML +=
+                                `<tr><td><strong>${parts[0].trim()}</strong></td><td>${parts[1].trim()}</td><td>${parts[2].trim()}</td></tr>`;
+                            const jpMatch = parts[2].match(/\d+/);
+                            if (jpMatch) totalJP += parseInt(jpMatch[0]);
+                        }
+                    });
+                    const alokasiJPTarget = extractJPNumber(alokasiWaktu);
+                    let totalRowStyle = '';
+                    let totalRowNote = '';
+                    if (alokasiJPTarget !== null) {
+                        if (totalJP === alokasiJPTarget) {
+                            totalRowStyle = 'color:#0f7b3a;';
+                            totalRowNote = ' ✅';
+                        } else {
+                            totalRowStyle = 'color:#c0392b;';
+                            totalRowNote = ` ⚠️ (Alokasi Waktu: ${alokasiJPTarget} JP)`;
+                        }
+                    }
+                    alurHTML += `<tr><td colspan="2" style="text-align:right;"><strong>Total</strong></td><td style="${totalRowStyle}"><strong>${totalJP} JP${totalRowNote}</strong></td></tr>`;
+                    alurHTML += `</tbody></table>`;
+                }
+
+                // Parse Asesmen Manual menjadi Tabel Rapi
+                let asesmenHTML = '';
+                if (asesmen) {
+                    const lines = asesmen.split('\n').filter(l => l.trim());
+                    if (lines[0] && lines[0].includes('|')) {
+                        asesmenHTML = `<table><thead><tr><th>Jenis Asesmen</th><th>Bentuk Asesmen</th><th>Keterangan / Instrumen</th></tr></thead><tbody>`;
+                        lines.forEach(line => {
+                            const parts = line.split('|');
+                            if (parts.length >= 2) {
+                                asesmenHTML += `<tr>
+                                    <td><strong>${parts[0].trim()}</strong></td>
+                                    <td>${parts[1].trim()}</td>
+                                    <td>${parts[2] ? parts[2].trim() : '—'}</td>
+                                </tr>`;
+                            } else {
+                                asesmenHTML += `<tr><td colspan="3">${line.trim()}</td></tr>`;
+                            }
+                        });
+                        asesmenHTML += `</tbody></table>`;
+                    } else {
+                        asesmenHTML = `<p>${asesmen.replace(/\n/g, '<br />')}</p>`;
+                    }
+                }
+
+                // Parse rubrik
+                let rubrikHTML = '';
+                if (rubrik) {
+                    const lines = rubrik.split('\n').filter(l => l.trim());
+                    if (lines.length > 1) {
+                        rubrikHTML = `<table>`;
+                        lines.forEach(line => {
+                            const cells = line.split('|').map(c => c.trim()).filter(c => c);
+                            if (cells.length > 1) {
+                                rubrikHTML += `<tr>`;
+                                cells.forEach(c => {
+                                    const isHeader = line.includes('Aspek') || line.includes('-------');
+                                    rubrikHTML +=
+                                        `<${isHeader && !line.includes('---') ? 'th' : 'td'}>${c || '—'}</${isHeader && !line.includes('---') ? 'th' : 'td'}>`;
+                                });
+                                rubrikHTML += `</tr>`;
+                            }
+                        });
+                        rubrikHTML += `</table>`;
+                    } else {
+                        rubrikHTML = `<p>${rubrik.replace(/\n/g, '<br />')}</p>`;
+                    }
+                }
+
+                let html = '';
+                html += `<div class="module-title">MODUL PROJEK P5</div>`;
+                html += `<div class="module-subtitle">${temaText}<br />${jenjang || 'Fase D / Kelas 7-9 SMP'}</div>`;
+
+                // A. IDENTITAS
+                html += `<div class="section-block">
+                            <h3>A. IDENTITAS MODUL</h3>
+                            <div class="content">
+                                <table>
+                                    <tr><td><strong>Nama Penyusun</strong></td><td>${pendidik || '—'}</td></tr>
+                                    <tr><td><strong>Institusi</strong></td><td>${satuan || '—'}</td></tr>
+                                    <tr><td><strong>Fase / Kelas</strong></td><td>${jenjang || '—'}</td></tr>
+                                    <tr><td><strong>Tema Projek</strong></td><td>${temaText}</td></tr>
+                                    <tr><td><strong>Topik Spesifik</strong></td><td>${topik || '—'}</td></tr>
+                                    <tr><td><strong>Alokasi Waktu</strong></td><td>${alokasiWaktu || '—'}</td></tr>
+                                    <tr><td><strong>Target Peserta Didik</strong></td><td>${target || '—'}</td></tr>
+                                </table>
+                            </div>
+                        </div>`;
+
+                // B. DESKRIPSI
+                html += `<div class="section-block">
+                            <h3>B. DESKRIPSI PROJEK</h3>
+                            <div class="content">
+                                <p>${deskripsi || '—'}</p>
+                            </div>
+                        </div>`;
+
+                // C. DIMENSI
+                html += `<div class="section-block">
+                            <h3>C. DIMENSI DAN ELEMEN PROFIL PELAJAR PANCASILA</h3>
+                            <div class="content">
+                                <p><span class="item-label">Dimensi yang Difokuskan:</span></p>
+                                <ul>${dimensi.length ? dimensi.map(d => `<li>${d}</li>`).join('') : '<li>—</li>'}</ul>
+                                <p style="margin-top:8px;"><span class="item-label">Elemen &amp; Sub-elemen yang Dituju:</span></p>
+                                <p>${elemen ? elemen.replace(/\n/g, '<br />') : '—'}</p>
+                            </div>
+                        </div>`;
+
+                // D. TUJUAN
+                html += `<div class="section-block">
+                            <h3>D. TUJUAN PROJEK</h3>
+                            <div class="content">
+                                <p>${tujuan ? tujuan.replace(/\n/g, '<br />') : '—'}</p>
+                            </div>
+                        </div>`;
+
+                // E. ALUR AKTIVITAS
+                html += `<div class="section-block">
+                            <h3>E. ALUR AKTIVITAS PROJEK</h3>
+                            <div class="content">
+                                ${alurHTML || '<p>—</p>'}
+                            </div>
+                        </div>`;
+
+                // F. ASESMEN
+                html += `<div class="section-block">
+                            <h3>F. ASESMEN (PENILAIAN) PROJEK</h3>
+                            <div class="content">
+                                ${asesmenHTML || '<p>—</p>'}
+                            </div>
+                        </div>`;
+
+                // G. RUBRIK
+                html += `<div class="section-block">
+                            <h3>G. RUBRIK PENILAIAN</h3>
+                            <div class="content">
+                                ${rubrikHTML || '<p>—</p>'}
+                            </div>
+                        </div>`;
+
+                // H. REFLEKSI
+                html += `<div class="section-block">
+                            <h3>H. LEMBAR REFLEKSI (Contoh untuk Siswa)</h3>
+                            <div class="content">
+                                <p><strong>Isilah pertanyaan berikut setelah projek selesai:</strong></p>
+                                <p>${refleksi ? refleksi.replace(/\n/g, '<br />') : '—'}</p>
+                            </div>
+                        </div>`;
+
+                // I. TANDA TANGAN
+                html += `<div class="section-block">
+                            <h3>I. TANDA TANGAN</h3>
+                            <div class="content">
+                                <p><span class="item-label">Kepala Sekolah</span> : ${kepsek || '—'}</p>
+                                <p><span class="item-label">NIP Kepala Sekolah</span> : ${nipKepsek || '—'}</p>
+                                <p style="margin-top:12px;"><span class="item-label">Nama Penyusun</span> : ${pendidikTtd || '—'}</p>
+                                <p><span class="item-label">NIP Penyusun</span> : ${nipPendidikTtd || '—'}</p>
+                                <p style="margin-top:12px;"><span class="item-label">Tempat / Tanggal</span> : ${tempatTgl || '—'}</p>
+                            </div>
+                        </div>`;
+
+                return html;
+            }
+
+            function updatePreview() {
+                previewBody.innerHTML = buildPreview();
+                updateAlurJPStatus();
+                showToast('✅ Pratinjau diperbarui');
+            }
+
+            function resetToExample() {
+                document.getElementById('satuan').value = 'SMP ISLAM NW KUMBUNG';
+                document.getElementById('pendidik').value = 'RAHMAT GUFRON TSANI';
+                document.getElementById('nip').value = 'NIP.';
+                document.getElementById('mapel').value = 'PPKn, IPA, Bahasa Indonesia, Seni Budaya, Prakarya';
+                document.getElementById('jenjang').value = 'Fase D / Kelas 7-9 SMP';
+                document.getElementById('alokasiWaktu').value = '48 JP (6 pertemuan)';
+                document.getElementById('tahun').value = '2025/2026';
+                document.getElementById('target').value = '32 siswa, heterogen (visual, kinestetik, analitis)';
+
+                document.getElementById('temaP5').value = 'gaya-hidup-berkelanjutan';
+
+                const dimChecks = document.querySelectorAll('#dimensiGrid input[type="checkbox"]');
+                dimChecks.forEach(cb => {
+                    const val = cb.value;
+                    cb.checked = ['Bergotong Royong', 'Bernalar Kritis', 'Kreatif'].includes(val);
+                });
+
+                document.getElementById('kepsek').value = 'RAHMAT GUFRON TSANI';
+                document.getElementById('nipKepsek').value = 'NIP.';
+                document.getElementById('pendidikTtd').value = 'RAHMAT GUFRON TSANI';
+                document.getElementById('nipPendidikTtd').value = 'NIP.';
+                document.getElementById('tempatTgl').value = 'Lombok Timur, 12 Mei 2025';
+
+                applyTheme('gaya-hidup-berkelanjutan');
+                showToast('↺ Reset ke contoh berhasil');
+            }
+
+            function printPreview() {
+                updatePreview();
+                setTimeout(() => {
+                    window.print();
+                }, 500);
+            }
+
+            // ── Events ──
+            document.getElementById('updatePreviewBtn').addEventListener('click', updatePreview);
+            document.getElementById('printBtn').addEventListener('click', printPreview);
+            document.getElementById('printBtnPreview').addEventListener('click', printPreview);
+            document.getElementById('resetBtn').addEventListener('click', resetToExample);
+            document.getElementById('autoBagiJPBtn').addEventListener('click', function() {
+                distributeJPFromAlokasi(false);
+            });
+            document.getElementById('alokasiWaktu').addEventListener('change', function() {
+                distributeJPFromAlokasi(true);
+            });
+
+            document.getElementById('temaP5').addEventListener('change', function() {
+                if (themeTemplates[this.value]) {
+                    applyTheme(this.value);
+                    showToast('📘 Template tema diterapkan');
+                }
+            });
+
+            let debounceTimer = null;
+            document.querySelectorAll('#moduleForm input, #moduleForm textarea, #moduleForm select').forEach(el => {
+                if (['temaP5'].includes(el.id)) return;
+                const evt = el.tagName === 'SELECT' ? 'change' : 'input';
+                el.addEventListener(evt, function() {
+                    clearTimeout(debounceTimer);
+                    debounceTimer = setTimeout(updatePreview, 500);
+                });
+            });
+
+            document.querySelectorAll('#dimensiGrid input[type="checkbox"]').forEach(cb => {
+                cb.addEventListener('change', function() {
+                    clearTimeout(debounceTimer);
+                    debounceTimer = setTimeout(updatePreview, 300);
+                });
+            });
+
+            // ── Init ──
+            setTimeout(function() {
+                applyTheme('gaya-hidup-berkelanjutan');
+            }, 100);
+
+        })();
+    </script>
+
+</body>
+</html>
